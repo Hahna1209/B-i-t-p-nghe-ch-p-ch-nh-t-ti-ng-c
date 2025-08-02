@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập nghe chép chính tả tiếng Đức - Essen und Trinken</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            text-align: center;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .vocabulary-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 5px solid #4facfe;
+        }
+
+        .vocabulary-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .vocab-item {
+            background: rgba(255,255,255,0.7);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .vocab-german {
+            font-weight: bold;
+            color: #2980b9;
+        }
+
+        .vocab-vietnamese {
+            color: #7f8c8d;
+            margin-left: 5px;
+        }
+
+        .exercise-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .sentence-counter {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 20px;
+        }
+
+        .audio-controls {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+        }
+
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .sentence-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+        }
+
+        .sentence-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+        }
+
+        .sentence-input.correct {
+            border-color: #27ae60;
+            background-color: #d5f4e6;
+        }
+
+        .sentence-input.incorrect {
+            border-color: #e74c3c;
+            background-color: #fdeaea;
+        }
+
+        .answer-display {
+            margin-top: 15px;
+            padding: 15px;
+            background: #d5f4e6;
+            border-radius: 10px;
+            border-left: 5px solid #27ae60;
+        }
+
+        .answer-german {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .answer-vietnamese {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+
+        .hint-section {
+            margin-top: 15px;
+        }
+
+        .hint-btn {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            color: #2d3436;
+            font-size: 0.9em;
+            padding: 8px 15px;
+        }
+
+        .hint-display {
+            margin-top: 10px;
+            padding: 10px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn {
+                margin: 5px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍎 Essen und Trinken</h1>
+            <p>Bài tập nghe chép chính tả tiếng Đức</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Câu 0/3</div>
+        </div>
+
+        <div class="main-content">
+            <div class="vocabulary-box">
+                <h3>📚 Từ vựng quan trọng</h3>
+                <div class="vocab-grid">
+                    <div class="vocab-item">
+                        <span class="vocab-german">Erdbeermarmelade</span>
+                        <span class="vocab-vietnamese">- mứt dâu tây</span>
+                    </div>
+                    <div class="vocab-item">
+                        <span class="vocab-german">Käse</span>
+                        <span class="vocab-vietnamese">- phô mai</span>
+                    </div>
+                    <div class="vocab-item">
+                        <span class="vocab-german">Abendbrot</span>
+                        <span class="vocab-vietnamese">- bữa tối</span>
+                    </div>
+                    <div class="vocab-item">
+                        <span class="vocab-german">Emmentaler</span>
+                        <span class="vocab-vietnamese">- phô mai Emmental</span>
+                    </div>
+                    <div class="vocab-item">
+                        <span class="vocab-german">Camembert</span>
+                        <span class="vocab-vietnamese">- phô mai Camembert</span>
+                    </div>
+                    <div class="vocab-item">
+                        <span class="vocab-german">Öko-Bauernbrot</span>
+                        <span class="vocab-vietnamese">- bánh mì nông dân hữu cơ</span>
+                    </div>
+                    <div class="vocab-item">
+                        <span class="vocab-german">billig</span>
+                        <span class="vocab-vietnamese">- rẻ</span>
+                    </div>
+                    <div class="vocab-item">
+                        <span class="vocab-german">probieren</span>
+                        <span class="vocab-vietnamese">- thử</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exercise-section" id="exerciseSection">
+                <div class="sentence-counter" id="sentenceCounter">Câu 1/3</div>
+                
+                <div class="audio-controls">
+                    <button class="btn" id="playBtn">🔊 Nghe</button>
+                    <button class="btn" id="repeatBtn">🔁 Nghe lại</button>
+                </div>
+
+                <div class="input-section">
+                    <input type="text" class="sentence-input" id="sentenceInput" 
+                           placeholder="Nghe và gõ câu tiếng Đức vào đây...">
+                </div>
+
+                <div class="hint-section">
+                    <button class="btn hint-btn" id="hintBtn">💡 Gợi ý</button>
+                    <div class="hint-display" id="hintDisplay" style="display: none;"></div>
+                </div>
+
+                <div class="answer-display" id="answerDisplay" style="display: none;">
+                    <div class="answer-german" id="answerGerman"></div>
+                    <div class="answer-vietnamese" id="answerVietnamese"></div>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <h2>🎉 Hoàn thành bài tập!</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="totalSentences">3</div>
+                        <div class="stat-label">Tổng câu</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="correctSentences">0</div>
+                        <div class="stat-label">Đúng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="hintsUsed">0</div>
+                        <div class="stat-label">Gợi ý đã dùng</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="accuracy">0%</div>
+                        <div class="stat-label">Độ chính xác</div>
+                    </div>
+                </div>
+                <button class="btn restart-btn" id="restartBtn">🔄 Làm lại</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dữ liệu bài tập
+        const sentences = [
+            {
+                german: "Heute besonders billig: Erdbeermarmelade, 450 Gramm für nur 1 Euro 49",
+                vietnamese: "Hôm nay đặc biệt rẻ: Mứt dâu tây, 450 gram chỉ 1 Euro 49"
+            },
+            {
+                german: "Essen Sie auch so gerne Käse zum Abendbrot? Wir haben für Sie 100 Gramm Emmentaler für nur 1 Euro 19 oder 100 Gramm französischer Camembert für nur 99 Cent",
+                vietnamese: "Bạn cũng thích ăn phô mai vào bữa tối chứ? Chúng tôi có cho bạn 100 gram Emmental chỉ 1 Euro 19 hoặc 100 gram Camembert Pháp chỉ 99 Cent"
+            },
+            {
+                german: "Probieren Sie dazu auch unser Öko-Bauernbrot: 500 Gramm für nur 2 Euro 15",
+                vietnamese: "Hãy thử cùng với bánh mì nông dân hữu cơ của chúng tôi: 500 gram chỉ 2 Euro 15"
+            }
+        ];
+
+        // Biến trạng thái
+        let currentSentence = 0;
+        let correctAnswers = 0;
+        let hintsUsedCount = 0;
+        let currentHintLevel = 0;
+
+        // Khởi tạo Speech Synthesis
+        let speechSynthesis = window.speechSynthesis;
+        let germanVoice = null;
+
+        // Tìm giọng tiếng Đức
+        function findGermanVoice() {
+            const voices = speechSynthesis.getVoices();
+            germanVoice = voices.find(voice => voice.lang.startsWith('de')) || voices[0];
+        }
+
+        // Khởi tạo giọng nói
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = findGermanVoice;
+        }
+        findGermanVoice();
+
+        // Các phần tử DOM
+        const elements = {
+            playBtn: document.getElementById('playBtn'),
+            repeatBtn: document.getElementById('repeatBtn'),
+            sentenceInput: document.getElementById('sentenceInput'),
+            hintBtn: document.getElementById('hintBtn'),
+            hintDisplay: document.getElementById('hintDisplay'),
+            answerDisplay: document.getElementById('answerDisplay'),
+            answerGerman: document.getElementById('answerGerman'),
+            answerVietnamese: document.getElementById('answerVietnamese'),
+            sentenceCounter: document.getElementById('sentenceCounter'),
+            progressFill: document.getElementById('progressFill'),
+            progressText: document.getElementById('progressText'),
+            exerciseSection: document.getElementById('exerciseSection'),
+            resultsSection: document.getElementById('resultsSection'),
+            restartBtn: document.getElementById('restartBtn')
+        };
+
+        // Phát âm câu
+        function speakSentence(text) {
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.voice = germanVoice;
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+            speechSynthesis.speak(utterance);
+        }
+
+        // Cập nhật giao diện
+        function updateUI() {
+            elements.sentenceCounter.textContent = `Câu ${currentSentence + 1}/${sentences.length}`;
+            elements.progressText.textContent = `Câu ${currentSentence}/${sentences.length}`;
+            elements.progressFill.style.width = `${(currentSentence / sentences.length) * 100}%`;
+            
+            elements.sentenceInput.value = '';
+            elements.sentenceInput.className = 'sentence-input';
+            elements.answerDisplay.style.display = 'none';
+            elements.hintDisplay.style.display = 'none';
+            currentHintLevel = 0;
+        }
+
+        // Kiểm tra câu trả lời
+        function checkAnswer() {
+            const userInput = elements.sentenceInput.value.trim();
+            const correctAnswer = sentences[currentSentence].german;
+            
+            if (userInput === correctAnswer) {
+                elements.sentenceInput.className = 'sentence-input correct';
+                correctAnswers++;
+                showAnswer();
+                setTimeout(nextSentence, 7000);
+            } else {
+                elements.sentenceInput.className = 'sentence-input incorrect';
+            }
+        }
+
+        // Hiển thị đáp án
+        function showAnswer() {
+            elements.answerGerman.textContent = sentences[currentSentence].german;
+            elements.answerVietnamese.textContent = sentences[currentSentence].vietnamese;
+            elements.answerDisplay.style.display = 'block';
+        }
+
+        // Chuyển câu tiếp theo
+        function nextSentence() {
+            currentSentence++;
+            if (currentSentence >= sentences.length) {
+                showResults();
+            } else {
+                updateUI();
+            }
+        }
+
+        // Hiển thị gợi ý
+        function showHint() {
+            const sentence = sentences[currentSentence].german;
+            const words = sentence.split(' ');
+            
+            if (currentHintLevel < words.length) {
+                hintsUsedCount++;
+                currentHintLevel++;
+                
+                const hintText = words.slice(0, currentHintLevel).join(' ') + 
+                               (currentHintLevel < words.length ? ' ...' : '');
+                
+                elements.hintDisplay.textContent = hintText;
+                elements.hintDisplay.style.display = 'block';
+            }
+        }
+
+        // Hiển thị kết quả
+        function showResults() {
+            elements.exerciseSection.style.display = 'none';
+            elements.resultsSection.style.display = 'block';
+            
+            const accuracy = Math.round((correctAnswers / sentences.length) * 100);
+            
+            document.getElementById('totalSentences').textContent = sentences.length;
+            document.getElementById('correctSentences').textContent = correctAnswers;
+            document.getElementById('hintsUsed').textContent = hintsUsedCount;
+            document.getElementById('accuracy').textContent = accuracy + '%';
+            
+            elements.progressFill.style.width = '100%';
+            elements.progressText.textContent = `Hoàn thành ${sentences.length}/${sentences.length}`;
+        }
+
+        // Khởi động lại
+        function restart() {
+            currentSentence = 0;
+            correctAnswers = 0;
+            hintsUsedCount = 0;
+            currentHintLevel = 0;
+            
+            elements.exerciseSection.style.display = 'block';
+            elements.resultsSection.style.display = 'none';
+            
+            updateUI();
+        }
+
+        // Event listeners
+        elements.playBtn.addEventListener('click', () => {
+            speakSentence(sentences[currentSentence].german);
+        });
+
+        elements.repeatBtn.addEventListener('click', () => {
+            speakSentence(sentences[currentSentence].german);
+        });
+
+        elements.sentenceInput.addEventListener('input', checkAnswer);
+
+        elements.hintBtn.addEventListener('click', showHint);
+
+        elements.restartBtn.addEventListener('click', restart);
+
+        // Khởi tạo
+        updateUI();
+    </script>
+</body>
+</html>
